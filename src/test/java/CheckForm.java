@@ -15,12 +15,12 @@ void fillAndCheckForm() {
     executeJavaScript("$('#fixedban').remove()");
     executeJavaScript("$('footer').remove()"); //скрываем рекламу
 
-    $("[id=firstName]").setValue("Ivan");
-    $("[id=lastName]").setValue("Petrov");
-    $("[id=userEmail]").setValue("Petrov@mail.com");
+    $("#firstName").setValue("Ivan");
+    $("#lastName").setValue("Petrov");
+    $("#userEmail").setValue("Petrov@mail.com");
     $("[for=gender-radio-1]").click();
-    $("[id=userNumber]").setValue("7123456789");
-    $("[id=dateOfBirthInput]").click();
+    $("#userNumber").setValue("7123456789");
+    $("#dateOfBirthInput").click();
 
     $("[class=react-datepicker__year-select]").selectOption("2008");
     $("[class=react-datepicker__month-select]").selectOption("July");
@@ -29,16 +29,16 @@ void fillAndCheckForm() {
     $("[for=subjectsInput]").click();
     $(byText("Maths")).click();
 
-    $("[id=uploadPicture]").uploadFromClasspath("img.png");
-    $("[id=currentAddress]").setValue("Moskau");
+    $("#uploadPicture").uploadFromClasspath("img.png");
+    $("#currentAddress").setValue("Moscow");
 
-    $("[id=state]").click();
+    $("#state").click();
     $(byText("NCR")).click();
 
-    $("[id=city]").click();
+    $("#city").click();
     $(byText("Delhi")).click();
 
-    $("[id=submit]").click();
+    $("#submit").click();
 
 //проверка данных в итоговой таблице
     $(".table-responsive").shouldHave(
@@ -48,9 +48,9 @@ void fillAndCheckForm() {
             text("7123456789"),
             text("2008-07-04"),
             text("Maths"),
-            text("Moskau")
+            text("Moscow")
     );
-    $("[id=closeModal]").click();
+    $("#closeModal").click();
 
 }
 }
