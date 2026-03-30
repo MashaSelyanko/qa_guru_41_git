@@ -14,13 +14,13 @@ class checkFormMinimum extends TestBase {
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()"); //скрываем рекламу
 
-        $("[id=firstName]").setValue("--");
-        $("[id=lastName]").setValue("--");
+        $("#firstName").setValue("--");
+        $("#lastName").setValue("--");
         $("[for=gender-radio-1]").click();
-        $("[id=userNumber]").setValue("1111111111");
+        $("#userNumber").setValue("1111111111");
 
 
-        $("[id=submit]").click();
+        $("#submit").click();
 
 //проверка данных в итоговой таблице
         $(".table-responsive").shouldHave(
