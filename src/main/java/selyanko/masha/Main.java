@@ -30,6 +30,7 @@ public static void main(String[] args) {
     }
 
     System.out.println("f*g= " + (f*g));
+    System.out.println("переполнение " + result);
 
 }
 }
