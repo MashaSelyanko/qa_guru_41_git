@@ -11,7 +11,7 @@ public static void main(String[] args) {
     double d = 2.55;
     byte f = 127;
     byte g = 99;
-    byte result = (byte) (f*g);
+    int max = Integer.MAX_VALUE;
 
     System.out.println("a+b= " + (a+b));
     System.out.println("b-a= " + (b-a));
@@ -30,7 +30,7 @@ public static void main(String[] args) {
     }
 
     System.out.println("f*g= " + (f*g));
-    System.out.println("переполнение " + result);
+    System.out.println("переполнение " + ++max);
 
 }
 }
