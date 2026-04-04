@@ -10,7 +10,7 @@ public class CheckForm extends TestBase {
 
 @Test
 void fillAndCheckForm() {
-    open("https://qa-guru.github.io/one-page-form/automation-practice-form.html");
+    open("/one-page-form/automation-practice-form.html");
 
     executeJavaScript("$('#fixedban').remove()");
     executeJavaScript("$('footer').remove()"); //скрываем рекламу
@@ -41,15 +41,13 @@ void fillAndCheckForm() {
     $("#submit").click();
 
 //проверка данных в итоговой таблице
-    $(".table-responsive").shouldHave(
-            text("Ivan Petrov"),
-            text("Petrov@mail.com"),
-            text("Male"),
-            text("7123456789"),
-            text("2008-07-04"),
-            text("Maths"),
-            text("Moscow")
-    );
+    $(".table-responsive").shouldHave(text("Ivan Petrov"));
+    $(".table-responsive").shouldHave(text("Petrov@mail.com"));
+    $(".table-responsive").shouldHave(text("Male"));
+    $(".table-responsive").shouldHave(text("7123456789"));
+    $(".table-responsive").shouldHave(text("2008-07-04"));
+    $(".table-responsive").shouldHave(text("Maths"));
+    $(".table-responsive").shouldHave(text("Moscow"));
     $("#closeModal").click();
 
 }

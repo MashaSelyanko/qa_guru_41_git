@@ -9,7 +9,7 @@ class checkFormMinimum extends TestBase {
 
     @Test
     void CheckFormMinimum() {
-        open("https://qa-guru.github.io/one-page-form/automation-practice-form.html");
+        open("/one-page-form/automation-practice-form.html");
 
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()"); //скрываем рекламу
