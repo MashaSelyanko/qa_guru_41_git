@@ -1,5 +1,7 @@
 import com.codeborne.selenide.ClickOptions;
 import org.junit.jupiter.api.Test;
+
+import static TestDate.TestDate.*;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -15,39 +17,39 @@ void fillAndCheckForm() {
     executeJavaScript("$('#fixedban').remove()");
     executeJavaScript("$('footer').remove()"); //скрываем рекламу
 
-    $("#firstName").setValue("Ivan");
-    $("#lastName").setValue("Petrov");
-    $("#userEmail").setValue("Petrov@mail.com");
+    $("#firstName").setValue(firstName);
+    $("#lastName").setValue(lastName);
+    $("#userEmail").setValue(userEmail);
     $("[for=gender-radio-1]").click();
-    $("#userNumber").setValue("7123456789");
+    $("#userNumber").setValue(userNumber);
     $("#dateOfBirthInput").click();
 
-    $("[class=react-datepicker__year-select]").selectOption("2008");
-    $("[class=react-datepicker__month-select]").selectOption("July");
+    $("[class=react-datepicker__year-select]").selectOption(year);
+    $("[class=react-datepicker__month-select]").selectOption(month);
     $(".react-datepicker__day.react-datepicker__day--004").click();
 
-    $("[for=subjectsInput]").click();
-    $(byText("Maths")).click();
+    $("#subjectsWrapper").click();
+    $(byText(role)).click();
 
     $("#uploadPicture").uploadFromClasspath("img.png");
-    $("#currentAddress").setValue("Moscow");
+    $("#currentAddress").setValue(currentAddress);
 
     $("#state").click();
-    $(byText("NCR")).click();
+    $(byText(state)).click();
 
     $("#city").click();
-    $(byText("Delhi")).click();
+    $(byText(city)).click();
 
     $("#submit").click();
 
 //проверка данных в итоговой таблице
-    $(".table-responsive").shouldHave(text("Ivan Petrov"));
-    $(".table-responsive").shouldHave(text("Petrov@mail.com"));
+    $(".table-responsive").shouldHave(text(firstEndlastName));
+    $(".table-responsive").shouldHave(text(userEmail));
     $(".table-responsive").shouldHave(text("Male"));
-    $(".table-responsive").shouldHave(text("7123456789"));
+    $(".table-responsive").shouldHave(text(userNumber));
     $(".table-responsive").shouldHave(text("2008-07-04"));
-    $(".table-responsive").shouldHave(text("Maths"));
-    $(".table-responsive").shouldHave(text("Moscow"));
+    $(".table-responsive").shouldHave(text(role));
+    $(".table-responsive").shouldHave(text(currentAddress));
     $("#closeModal").click();
 
 }
