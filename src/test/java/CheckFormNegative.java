@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selenide.*;
 class checkFormNegative extends TestBase {
 
     @Test
-    void CheckFormMinimum() {
+    void TestCheckFormMinimum() {
         open("/one-page-form/automation-practice-form.html");
 
         executeJavaScript("$('#fixedban').remove()");
@@ -34,7 +34,7 @@ class checkFormNegative extends TestBase {
 
 
     @Test
-    void CheckFormNegative() {
+    void TestCheckFormNegative() {
         open("https://qa-guru.github.io/one-page-form/automation-practice-form.html");
 
         executeJavaScript("$('#fixedban').remove()");
