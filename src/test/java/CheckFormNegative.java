@@ -5,7 +5,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 
-class checkFormMinimum extends TestBase {
+class checkFormNegative extends TestBase {
 
     @Test
     void CheckFormMinimum() {
@@ -27,25 +27,25 @@ class checkFormMinimum extends TestBase {
                 text("-- --"),
                 text("Male"),
                 text("1111111111")
-                );
+        );
         $("[id=closeModal]").click();
 
     }
 
 
     @Test
-void CheckFormNegative() {
-    open("https://qa-guru.github.io/one-page-form/automation-practice-form.html");
+    void CheckFormNegative() {
+        open("https://qa-guru.github.io/one-page-form/automation-practice-form.html");
 
-    executeJavaScript("$('#fixedban').remove()");
-    executeJavaScript("$('footer').remove()"); //скрываем рекламу
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()"); //скрываем рекламу
 
-    $("#firstName").setValue("0");
-    $("#submit").click();
+        $("#firstName").setValue("0");
+        $("#submit").click();
 
 //проверка отображения ошибки заполнения
-   $("#formError").shouldHave(text("Please fill required fields and enter a valid 10-digit mobile number."));
-   $("#firstName").shouldBe(visible);
-}
+        $("#formError").shouldHave(text("Please fill required fields and enter a valid 10-digit mobile number."));
+        $("#firstName").shouldBe(visible);
+    }
 
 }

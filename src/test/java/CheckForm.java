@@ -1,4 +1,5 @@
 import com.codeborne.selenide.ClickOptions;
+import com.codeborne.selenide.WebElementCondition;
 import org.junit.jupiter.api.Test;
 
 import static TestDate.TestDate.*;
@@ -31,6 +32,8 @@ void fillAndCheckForm() {
     $("#subjectsWrapper").click();
     $(byText(role)).click();
 
+    $("label[for=hobbies-checkbox-1]").click();
+
     $("#uploadPicture").uploadFromClasspath("img.png");
     $("#currentAddress").setValue(currentAddress);
 
@@ -43,15 +46,23 @@ void fillAndCheckForm() {
     $("#submit").click();
 
 //проверка данных в итоговой таблице
-    $(".table-responsive").shouldHave(text(firstEndlastName));
-    $(".table-responsive").shouldHave(text(userEmail));
-    $(".table-responsive").shouldHave(text("Male"));
-    $(".table-responsive").shouldHave(text(userNumber));
-    $(".table-responsive").shouldHave(text("2008-07-04"));
-    $(".table-responsive").shouldHave(text(role));
-    $(".table-responsive").shouldHave(text(currentAddress));
+   $$("tbody#resultBody tr").get(0).shouldHave(text(firstEndlastName));
+    $$("tbody#resultBody tr").get(1).shouldHave(text(userEmail));
+    $$("tbody#resultBody tr").get(2).shouldHave(text("Male"));
+    $$("tbody#resultBody tr").get(3).shouldHave(text(userNumber));
+    $$("tbody#resultBody tr").get(4).shouldHave(text("2008-07-04"));
+    $$("tbody#resultBody tr").get(5).shouldHave(text(role));
+    $$("tbody#resultBody tr").get(6).shouldHave(text("Sports"));
+    $$("tbody#resultBody tr").get(7).shouldHave(text("img.png"));
+    $$("tbody#resultBody tr").get(8).shouldHave(text(currentAddress));
+    $$("tbody#resultBody tr").get(9).shouldHave(text(state));
+    $("#city").shouldHave(text(city));
+
     $("#closeModal").click();
 
 }
+
+    private void shouldHave(WebElementCondition text) {
+    }
 }
 

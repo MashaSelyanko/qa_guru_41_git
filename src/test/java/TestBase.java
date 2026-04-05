@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selenide.closeWebDriver;
 public class TestBase {
 
     @BeforeAll
-    static void beforeAll() {
+    static void setupSelenideConfig () {
         Configuration.browser = "chrome";
         Configuration.browserSize = "1920x1080";
         Configuration.baseUrl = "https://qa-guru.github.io";
@@ -16,7 +16,7 @@ public class TestBase {
     }
 
     @AfterEach
-    void afterEach() {
+    void tearDowb () {
         closeWebDriver();
     }
 }
