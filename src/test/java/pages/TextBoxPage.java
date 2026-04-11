@@ -1,31 +1,30 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
-
+import pages.components.CalendarComponent;
+import pages.components.StateAndCityComponent;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byId;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static testdata.TestData.*;
 
 public class TextBoxPage {
     //Elements
+    CalendarComponent calendar = new CalendarComponent();
+    StateAndCityComponent stateAndCity = new StateAndCityComponent();
+
     private SelenideElement userFirstNameInput = $("#firstName");
     private SelenideElement userLastNameInput = $("#lastName");
     private SelenideElement userEmailInput = $("#userEmail");
-    private SelenideElement submitButton = $("#submit");
     private SelenideElement outputResults = $(".table-responsive");
     private SelenideElement userBirthInput = $("#dateOfBirthInput");
     private SelenideElement userNumberInput = $("#userNumber");
-    private SelenideElement userYearInput = $(".react-datepicker__year-select");
-    private SelenideElement userMonthInput = $(".react-datepicker__month-select");
-    private SelenideElement userDayInput = $("#datepickerDays");
     private SelenideElement userAddressTextarea = $("#currentAddress");
     private SelenideElement userSubjectInput = $("#subjectsInput");
     private SelenideElement uploadPicture = $("#uploadPicture");
-    private SelenideElement userStateCombobox = $("#state");
-    private SelenideElement userCityCombobox = $("#city");
-
+    private SelenideElement submitButton = $("#submit");
+    private SelenideElement closeModal = $("#closeModal"); //для теста
+    private SelenideElement textErrorAutomation = $("#formError"); //текст негативного теста
 
     //Actions
     public void openPage() {
@@ -44,33 +43,19 @@ public class TextBoxPage {
         userEmailInput.setValue(value);
     }
 
-    public void submitForm() {
-        submitButton.click();
-    }
-
     public void setGender(String gender) {
         $(byText(gender)).click(); //т.к. локатор динамический, не объявляли его отдельно в переменных, а инкапсулировали в логику в метод сразу
-    }
-
-    public void setUserBirthInput() {
-        userBirthInput.click();
     }
 
     public void setUserTelNumberInput(String number) {
         userNumberInput.setValue(number);
     }
 
-    public void setUserYearInput(String number) {
-        userYearInput.selectOption(number);
-    }
+    public TextBoxPage setDateOfBirth(String day, String month, String year) {
+        userBirthInput.click();
+        calendar.setDate(day, month, year);
 
-    public void setUserMonthInput(String month) {
-        int monthValue = Integer.parseInt(month) - 1;
-        userMonthInput.selectOptionByValue(month);
-    }
-
-    public void setUserDayInput(String day) {
-        userDayInput.click();
+        return this;
     }
 
     public void setSubjectInput(String role) {
@@ -91,33 +76,56 @@ public class TextBoxPage {
         userAddressTextarea.setValue(value);
     }
 
-    public void setUserStateCombobox(String state) {
-        userStateCombobox.click();
-        $(byText(state)).click();
+    public void setStateAndCity(String state, String city) {
+        stateAndCity.setStateAndCity(state, city);
     }
 
-    public void setUserCityCombobox(String city) {
-        userCityCombobox.click();
-        $(byText(city)).click();
+    public void submitForm() {
+        submitButton.click();
     }
-
-
-
-
-
-
-
-
-
-
-
 
     //Tests
-    public void checkField(String key, String value) {
-        outputResults.$(byText(key)).parent().shouldHave(text(value));
+    public void checkResult(String key, String value) {
+        outputResults.$(byText(key))
+                .parent()                   //поднялись к родительской "tr"
+                .$$("td")                //видим все "td"
+                .get(1)                     //берем значение у второго (индекс 1)
+                .shouldHave(text(value));   //проверяем
     }
 
+    public void checkDate(String key, String day, String month, String year) {
+        String expectedDate = String.format("%s-%02d-%02d",
+                year,
+                Integer.parseInt(month),
+                Integer.parseInt(day));
+        outputResults.$(byText(key))
+                .parent()
+                .$$("td")
+                .get(1)
+                .shouldHave(text(expectedDate));
+    }
+
+    public void checkStateAndCity(String key, String state, String city) {
+        outputResults.$(byText(key))
+                .parent()
+                .$$("td")
+                .get(1)
+                .shouldHave(text(state + " " + city));
+    }
+
+    public void checkSubmit() {
+        closeModal.click();
+    }
+
+    public void checkShouldHave(String value) {
+        textErrorAutomation.shouldHave(text(value)); //текс ошибки при негативной проверке
+    }
+
+    public void checkFirstNameIsVisible() {
+        userFirstNameInput.shouldBe(visible);
+    }
 }
+
 
 
 
