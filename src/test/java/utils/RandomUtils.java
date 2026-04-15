@@ -26,7 +26,7 @@ public class RandomUtils {
 
     private static final Map<String, String[]> stateCityMap = Map.of(
             "NCR", new String[]{"Delhi", "Gurgaon", "Noida"},
-            "Uttar Pradesh", new String[]{"Agra", "Lucknow", "Meerut"},
+            "Uttar Pradesh", new String[]{"Agra", "Lucknow", "Merrut"},
             "Haryana", new String[]{"Karnal", "Panipad"},
             "Rajasthan", new String[]{"Jaipur", "Jaiselmer"}
     );           //объявили словарь, где каждому штату соответствует массив городов
