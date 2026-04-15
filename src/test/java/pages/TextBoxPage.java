@@ -23,7 +23,7 @@ public class TextBoxPage {
     private SelenideElement userSubjectInput = $("#subjectsInput");
     private SelenideElement uploadPicture = $("#uploadPicture");
     private SelenideElement submitButton = $("#submit");
-    private SelenideElement closeModal = $("#closeModal"); //для теста
+
     private SelenideElement textErrorAutomation = $("#formError"); //текст негативного теста
 
     //Actions
@@ -85,13 +85,7 @@ public class TextBoxPage {
     }
 
     //Tests
-    public void checkResult(String key, String value) {
-        outputResults.$(byText(key))
-                .parent()                   //поднялись к родительской "tr"
-                .$$("td")                //видим все "td"
-                .get(1)                     //берем значение у второго (индекс 1)
-                .shouldHave(text(value));   //проверяем
-    }
+
 
     public void checkDate(String key, String day, String month, String year) {
         String expectedDate = String.format("%s-%02d-%02d",
@@ -103,18 +97,6 @@ public class TextBoxPage {
                 .$$("td")
                 .get(1)
                 .shouldHave(text(expectedDate));
-    }
-
-    public void checkStateAndCity(String key, String state, String city) {
-        outputResults.$(byText(key))
-                .parent()
-                .$$("td")
-                .get(1)
-                .shouldHave(text(state + " " + city));
-    }
-
-    public void checkSubmit() {
-        closeModal.click();
     }
 
     public void checkShouldHave(String value) {
