@@ -2,6 +2,7 @@ package tests;
 
 import org.junit.jupiter.api.*;
 import pages.*;
+import pages.components.*;
 
 import static com.codeborne.selenide.Selenide.*;
 import static testdata.TestData.*;
@@ -11,6 +12,8 @@ import static utils.RandomUtils.getRandomState;
 
 public class CheckFormNegative extends TestBase {
     TextBoxPage textBoxPage = new TextBoxPage();
+    TextBoxPageResult textBoxPageResult = new TextBoxPageResult();
+
 
     @BeforeEach
         //метод/аннотация - инструмент для выполнения перед началом каждого теста
@@ -32,10 +35,10 @@ public class CheckFormNegative extends TestBase {
             textBoxPage.setUserTelNumberInput(userNumberNegative);
             textBoxPage.submitForm();
             //проверка данных в итоговой таблице
-            textBoxPage.checkResult("Student Name", firstNameNegative + " " + lastNameNegative);
-            textBoxPage.checkResult("Gender", gender);
-            textBoxPage.checkResult("Mobile", userNumberNegative);
-            textBoxPage.checkSubmit();
+            textBoxPageResult.checkResult("Student Name", firstNameNegative + " " + lastNameNegative);
+            textBoxPageResult.checkResult("Gender", gender);
+            textBoxPageResult.checkResult("Mobile", userNumberNegative);
+            textBoxPageResult.checkSubmit();
         }
 
         @Test
