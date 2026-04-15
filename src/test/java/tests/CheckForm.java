@@ -1,14 +1,25 @@
 package tests;//import com.codeborne.selenide.WebElementCondition;
-import org.junit.jupiter.api.Test;
-import pages.TextBoxPage;
+
+import org.junit.jupiter.api.*;
+import pages.*;
 import static com.codeborne.selenide.Selenide.*;
 import static testdata.TestData.*;
+import static utils.RandomUtils.*;
+
 
 public class CheckForm extends TestBase {
     TextBoxPage textBoxPage = new TextBoxPage();
 
+    @BeforeEach         //метод/аннотация - инструмент для выполнения перед началом каждого теста
+    void prepareRandomData() {
+        userEmail = getRandomEmail();
+        state = getRandomState();
+        city = getRandomCity(state);
+
+    }
+
     @Test
-    void fillAndCheckForm() {
+    void fillAndCheckFormTests_with_faker() {
         textBoxPage.openPage();
 
         executeJavaScript("$('#fixedban').remove()");
