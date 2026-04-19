@@ -3,14 +3,14 @@ package tests;
 import org.junit.jupiter.api.*;
 import pages.*;
 import pages.components.*;
+import testdata.*;
 
 import static com.codeborne.selenide.Selenide.*;
-import static testdata.TestData.*;
 import static utils.RandomUtils.*;
-import static utils.RandomUtils.getRandomCity;
-import static utils.RandomUtils.getRandomState;
 
 public class CheckFormNegative extends TestBase {
+    TestData testData = new TestData();
+
     TextBoxPage textBoxPage = new TextBoxPage();
     TextBoxPageResult textBoxPageResult = new TextBoxPageResult();
 
@@ -18,9 +18,7 @@ public class CheckFormNegative extends TestBase {
     @BeforeEach
         //метод/аннотация - инструмент для выполнения перед началом каждого теста
     void prepareRandomData() {
-        userEmail = getRandomEmail();
-        state = getRandomState();
-        city = getRandomCity(state);}
+        testData.city = selectCity(testData.state);}
 
         @Test
         void checkFormMinimumTests() {
@@ -29,15 +27,15 @@ public class CheckFormNegative extends TestBase {
             executeJavaScript("$('#fixedban').remove()");
             executeJavaScript("$('footer').remove()"); //скрываем рекламу
 
-            textBoxPage.typeUserFirstName(firstNameNegative);
-            textBoxPage.typeUserLastName(lastNameNegative);
-            textBoxPage.setGender(gender);
-            textBoxPage.setUserTelNumberInput(userNumberNegative);
+            textBoxPage.typeUserFirstName(testData.firstNameNegative);
+            textBoxPage.typeUserLastName(testData.lastNameNegative);
+            textBoxPage.setGender(testData.gender);
+            textBoxPage.setUserTelNumberInput(testData.userNumberNegative);
             textBoxPage.submitForm();
             //проверка данных в итоговой таблице
-            textBoxPageResult.checkResult("Student Name", firstNameNegative + " " + lastNameNegative);
-            textBoxPageResult.checkResult("Gender", gender);
-            textBoxPageResult.checkResult("Mobile", userNumberNegative);
+            textBoxPageResult.checkResult("Student Name", testData.firstNameNegative + " " + testData.lastNameNegative);
+            textBoxPageResult.checkResult("Gender", testData.gender);
+            textBoxPageResult.checkResult("Mobile", testData.userNumberNegative);
             textBoxPageResult.checkSubmit();
         }
 
@@ -48,7 +46,7 @@ public class CheckFormNegative extends TestBase {
             executeJavaScript("$('#fixedban').remove()");
             executeJavaScript("$('footer').remove()"); //скрываем рекламу
 
-            textBoxPage.typeUserFirstName(firstNameNegative);
+            textBoxPage.typeUserFirstName(testData.firstNameNegative);
             textBoxPage.submitForm();
 
             //проверка отображения ошибки заполнения

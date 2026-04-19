@@ -1,12 +1,14 @@
 package tests;
 
-import org.junit.jupiter.api.Test;
-import pages.TextBoxPage;
+import org.junit.jupiter.api.*;
+import pages.*;
 import pages.components.*;
+import testdata.*;
 
-import static testdata.TestData.*;
 
 public class FormFinalTests {
+        TestData testData = new TestData();
+
     TextBoxPage textBoxPage = new TextBoxPage();
     TextBoxPageResult textBoxPageResult = new TextBoxPageResult();
 
@@ -14,16 +16,16 @@ public class FormFinalTests {
         void fillAndCheckForm() {
 
             //Tests
-            textBoxPageResult.checkResult("Student Name", firstName + " " + lastName);
-            textBoxPageResult.checkResult("Student Email", userEmail);
-            textBoxPageResult.checkResult("Gender", gender);
-            textBoxPageResult.checkResult("Mobile", userNumber);
-            textBoxPage.checkDate("Date of Birth", day, month, year);
-            textBoxPageResult.checkResult("Subjects", role);
-            textBoxPageResult.checkResult("Hobbies", hobbies);
-            textBoxPageResult.checkResult("Picture", picture);
-            textBoxPageResult.checkResult("Address", currentAddress);
-            textBoxPageResult.checkStateAndCity("State and City", state, city);
+            textBoxPageResult.checkResult("Student Name", testData.firstName + " " + testData.lastName);
+            textBoxPageResult.checkResult("Student Email", testData.userEmail);
+            textBoxPageResult.checkResult("Gender", testData.gender);
+            textBoxPageResult.checkResult("Mobile", testData.userNumber);
+            textBoxPage.checkDate("Date of Birth", testData.day, testData.month, testData.year);
+            textBoxPageResult.checkResult("Subjects", testData.role);
+            textBoxPageResult.checkResult("Hobbies", testData.hobbies);
+            textBoxPageResult.checkResult("Picture", testData.picture);
+            textBoxPageResult.checkResult("Address", testData.currentAddress);
+            textBoxPageResult.checkStateAndCity("State and City", testData.state, testData.city);
             textBoxPageResult.checkSubmit();
 
         }
