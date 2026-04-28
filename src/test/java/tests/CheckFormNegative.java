@@ -6,7 +6,6 @@ import pages.components.*;
 import testdata.*;
 
 import static com.codeborne.selenide.Selenide.*;
-import static utils.RandomUtils.*;
 
 public class CheckFormNegative extends TestBase {
     TestData testData = new TestData();
@@ -18,7 +17,7 @@ public class CheckFormNegative extends TestBase {
     @BeforeEach
         //метод/аннотация - инструмент для выполнения перед началом каждого теста
     void prepareRandomData() {
-        testData.city = selectCity(testData.state);}
+        testData.city = testData.selectCity(testData.state);}
 
         @Test
         void checkFormMinimumTests() {
