@@ -26,8 +26,6 @@ public class WebPaymentsTest {
                 .shouldHave(text("₽"));   //проверка, что сумма содержит символ рубля
     }
 
-    ;
-
     @CsvSource(value = {
             "Аннуитетный; 470 601,77",
             "Диффиренцированный;  381 250,00"
