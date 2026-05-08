@@ -1,6 +1,5 @@
 package parametrizedTests.MethodSource;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
@@ -40,46 +39,46 @@ public class NbkiTest {
     void successfulCustomerCategoriesTest(CustomerCategories category) {
         open("https://nbki.ru/");
 
-        // убираем банне про куки
+        // убираем баннер-куки
         if ($(withText("Принимаю")).exists()) {
             $(withText("Принимаю")).click();
         }
 
+        // клик на список категорий
         $(".headertop__links").shouldBe(Condition.visible).click();
 
-        // Проверка, активна ли уже нужная категория
-        $$(".headertop__link.current a")
-                .find(Condition.text(category.typeName));
+        // активна ли нужная категория
+        String activeCategoryText = $$(".headertop__link.current a")
+                .first()
+                .getText();
+        boolean isAlreadyActive = activeCategoryText.equals(category.typeName);
 
-        // Берем активную категорию
-        SelenideElement activeCategory = $(".headertop__link.current a");
-        boolean isAlreadyActive = activeCategory.exists();
-
+        // меняем категорию, только если она ещё не активна
         if (!isAlreadyActive) {
-
-         // Выбираем, только если категория не активна
             $$(".headertop__dropdown a")
                     .filterBy(partialText(category.typeName))
                     .first()
+                    .shouldBe(Condition.visible)  // Ждём, пока элемент станет видимым
                     .click();
         }
-        // Проверка, что появилась хотя бы одна кнопка хэдера
+
+        // проверка, что появилась хотя бы одна кнопка хэдера
         $$(".headermenu li a")
                 .filterBy(partialText(category.expectedButtons.get(0)))
                 .first()
                 .shouldBe(Condition.visible);
 
-        // Проверяем кнопки хэдера
+        // проверки кнопок хэдера
         var menuLinks = $$(".headermenu li a");
         if (category == CustomerCategories.CORPORATE) {
-            // Для корп. клиентов исключаем спец. кнопку из общей проверки
+            // у корп.клиентов исключаем спец.кнопку из общей проверки
             menuLinks.filterBy(Condition.not(partialText("Подключиться к НБКИ")))
                     .shouldHave(textsInAnyOrder(category.expectedButtons));
         } else {
             menuLinks.shouldHave(textsInAnyOrder(category.expectedButtons));
         }
 
-        // Проверка кнопки "Войти"
+        // проверка кнопки "Войти"
         var loginBtn = $$(".headerright span, .headerright a")
                 .filterBy(partialText("Войти"))
                 .first();
@@ -90,7 +89,7 @@ public class NbkiTest {
             loginBtn.shouldNotBe(Condition.visible);
         }
 
-        // 5. Проверка доп.кнопки
+        // проверка доп. кнопки
         if (category.extraButton != null) {
             $(byText(category.extraButton)).shouldBe(Condition.visible);
         }
