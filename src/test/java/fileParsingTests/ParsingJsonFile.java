@@ -28,11 +28,6 @@ public class ParsingJsonFile {
             Assertions.assertEquals("GPS", array_0);
             Assertions.assertEquals("Camera", array_1);
             Assertions.assertEquals("Climate Control", array_2);
-//    {
-//        "brand": "Toyota",
-//            "year": 2024,
-//            "features": ["GPS", "Camera", "Climate Control"],
-//    }
         }
     }
 }
