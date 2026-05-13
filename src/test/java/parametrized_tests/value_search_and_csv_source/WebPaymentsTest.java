@@ -1,4 +1,4 @@
-package parametrizedTests.ValueSearchAndCsvSource;
+package parametrized_tests.value_search_and_csv_source;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;

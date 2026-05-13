@@ -1,6 +1,6 @@
-package collections_Framework.framework_Set;
+package collections_framework.framework_set;
 
-import collections_Framework.framework_Map.Auto;
+import collections_framework.framework_map.Auto;
 
 import java.util.*;
 

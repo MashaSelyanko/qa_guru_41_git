@@ -1,4 +1,4 @@
-package parametrizedTests.MethodSource;
+package parametrized_tests.method_source;
 import java.util.List;
 
 public enum CustomerCategories {

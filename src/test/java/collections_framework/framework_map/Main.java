@@ -1,6 +1,6 @@
 //Map позволяет иметь константное время доступа к объекту по ключу
 
-package collections_Framework.framework_Map;
+package collections_framework.framework_map;
 
 import java.util.*;
 

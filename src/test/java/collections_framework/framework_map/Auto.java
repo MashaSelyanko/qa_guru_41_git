@@ -1,4 +1,4 @@
-package collections_Framework.framework_Map;
+package collections_framework.framework_map;
 
 public class Auto {
 
