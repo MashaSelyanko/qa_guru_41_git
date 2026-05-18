@@ -38,5 +38,7 @@ public class NbkiTest {
         helperMetods.acceptCookiesIfVisible();
         helperMetods.selectCategoryIfNotActive(category);
         helperMetods.checkHeaderButtons(category);
+        helperMetods.checkLoginButtonVisibility(category);
+        helperMetods.checkExtraButtonVisibility(category);
     }
 }

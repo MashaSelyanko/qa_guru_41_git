@@ -14,7 +14,7 @@ public class HelperMetods {
     public void acceptCookiesIfVisible() {
         var acceptButton = $(withText("Принимаю"));
 
-        if (acceptButton.exists()) {
+        if (acceptButton.isDisplayed()) {
             acceptButton.click();
         }
     }
@@ -22,7 +22,6 @@ public class HelperMetods {
     public void selectCategoryIfNotActive(CustomerCategories category) {
         String targetName = category.typeName;
 
-        // клик на список категорий
         $(".headertop__links").shouldBe(Condition.visible).click();
 
         // активна ли нужная категория
@@ -36,36 +35,37 @@ public class HelperMetods {
             $$(".headertop__dropdown a")
                     .filterBy(partialText(category.typeName))
                     .first()
-                    .shouldBe(Condition.visible)  // Ждём, пока элемент станет видимым
+                    .shouldBe(Condition.visible)
                     .click();
         }
     }
 
     public void checkHeaderButtons(CustomerCategories category) {
-        // 1. Проверка основных кнопок меню
         var menuLinks = $$(".headermenu li a");
         if (category == CustomerCategories.CORPORATE) {
-            // У корпоративных клиентов исключаем синюю кнопку из общего списка меню
+            // У корп.клиентов исключаем синюю кнопку из общего списка меню
             menuLinks.filterBy(Condition.not(Condition.partialText("Подключиться к НБКИ")))
                     .shouldHave(CollectionCondition.textsInAnyOrder(category.expectedButtons));
         } else {
             menuLinks.shouldHave(CollectionCondition.textsInAnyOrder(category.expectedButtons));
         }
-
-        // 2. Проверка кнопки "Войти"
-        var loginBtn = $$(".headerright span, .headerright a")
-                .filterBy(Condition.partialText("Войти"))
-                .first();
-
-        if (category.hasLoginButton) {
-            loginBtn.shouldBe(Condition.visible);
-        } else {
-            loginBtn.shouldNotBe(Condition.visible);
+    }
+        // Проверка кнопки "Войти"
+public void checkLoginButtonVisibility(CustomerCategories category) {
+            var loginBtn = $$(".headerright span, .headerright a")
+                    .filterBy(Condition.partialText("Войти"));
+            if (category.hasLoginButton) {
+                loginBtn.shouldHave(CollectionCondition.sizeGreaterThan(0));
+                ;
+            } else {
+                loginBtn.shouldHave(CollectionCondition.size(0));
+                ;
+            }
         }
-
-        // 3. Проверка дополнительной кнопки (если она задана)
-        if (category.extraButton != null) {
-            $(Selectors.byText(category.extraButton)).shouldBe(Condition.visible);
+public void checkExtraButtonVisibility(CustomerCategories category) {
+            // Проверка доп.кнопки
+            if (category.extraButton != null) {
+                $(Selectors.byText(category.extraButton)).shouldBe(Condition.visible);
+            }
         }
     }
-}

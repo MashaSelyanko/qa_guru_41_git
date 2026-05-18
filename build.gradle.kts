@@ -16,6 +16,8 @@ dependencies {
     testImplementation("com.github.javafaker:javafaker:1.0.2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.seleniumhq.selenium:selenium-java:4.27.0")
+    testImplementation("io.qameta.allure:allure-selenide:2.24.0")
+
     }
 
 tasks.test {
