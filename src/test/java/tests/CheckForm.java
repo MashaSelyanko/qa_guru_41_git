@@ -1,58 +1,75 @@
 package tests;//import com.codeborne.selenide.WebElementCondition;
 
+import com.codeborne.selenide.SelenideTargetLocator;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.Story;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 import pages.*;
 import pages.components.*;
 import testdata.*;
-
 import static com.codeborne.selenide.Selenide.*;
+import static io.qameta.allure.Allure.step;
 import static utils.RandomUtils.*;
 
-
+@Story("Registration form")
 public class CheckForm extends TestBase {
     TestData testData = new TestData();
 
     TextBoxPage textBoxPage = new TextBoxPage();
     TextBoxPageResult textBoxPageResult = new TextBoxPageResult();
 
-    @BeforeEach         //метод/аннотация - инструмент для выполнения перед началом каждого теста
+    @BeforeEach
+        //метод/аннотация - инструмент для выполнения перед началом каждого теста
     void prepareRandomData() {
         testData.city = selectCity(testData.state);
-
     }
 
+    void addListener() {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+
+    }               //добавляет скриншоты
+
     @Test
+    @DisplayName("Fill and check form tests")
     void fillAndCheckFormTests_with_faker() {
-        textBoxPage.openPage();
+        step("Open registration form", () -> {
+            textBoxPage.openPage();
+        });
 
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()"); //скрываем рекламу
 
-        textBoxPage.typeUserFirstName(testData.firstName);
-        textBoxPage.typeUserLastName(testData.lastName);
-        textBoxPage.typeUserEmail(testData.userEmail);
-        textBoxPage.setGender(testData.gender);
-        textBoxPage.setDateOfBirth(testData.day, testData.month, testData.year);
-        textBoxPage.setUserTelNumberInput(testData.userNumber);
-        textBoxPage.setSubjectInput(testData.role);
-        textBoxPage.setHobbies(testData.hobbies);
-        textBoxPage.setUploadPicture(testData.picture);
-        textBoxPage.setUserAddressTextarea(testData.currentAddress);
-        textBoxPage.setStateAndCity(testData.state, testData.city);
-        textBoxPage.submitForm();
 
-        //Tests
-        textBoxPageResult.checkResult("Student Name", testData.firstName + " " + testData.lastName);
-        textBoxPageResult.checkResult("Student Email", testData.userEmail);
-        textBoxPageResult.checkResult("Gender", testData.gender);
-        textBoxPageResult.checkResult("Mobile", testData.userNumber);
-        textBoxPage.checkDate("Date of Birth", testData.day, testData.month, testData.year);
-        textBoxPageResult.checkResult("Subjects", testData.role);
-        textBoxPageResult.checkResult("Hobbies", testData.hobbies);
-        textBoxPageResult.checkResult("Picture", testData.picture);
-        textBoxPageResult.checkResult("Address", testData.currentAddress);
-        textBoxPageResult.checkStateAndCity("State and City", testData.state, testData.city);
-        textBoxPageResult.checkSubmit();
+        step("Fill registration form", () -> {
+            textBoxPage.typeUserFirstName(testData.firstName);
+            textBoxPage.typeUserLastName(testData.lastName);
+            textBoxPage.typeUserEmail(testData.userEmail);
+            textBoxPage.setGender(testData.gender);
+            textBoxPage.setDateOfBirth(testData.day, testData.month, testData.year);
+            textBoxPage.setUserTelNumberInput(testData.userNumber);
+            textBoxPage.setSubjectInput(testData.role);
+            textBoxPage.setHobbies(testData.hobbies);
+            textBoxPage.setUploadPicture(testData.picture);
+            textBoxPage.setUserAddressTextarea(testData.currentAddress);
+            textBoxPage.setStateAndCity(testData.state, testData.city);
+            textBoxPage.submitForm();
+        });
+
+        step("Check registration form results", () -> {
+            //Tests
+            textBoxPageResult.checkResult("Student Name", testData.firstName + " " + testData.lastName);
+            textBoxPageResult.checkResult("Student Email", testData.userEmail);
+            textBoxPageResult.checkResult("Gender", testData.gender);
+            textBoxPageResult.checkResult("Mobile", testData.userNumber);
+            textBoxPage.checkDate("Date of Birth", testData.day, testData.month, testData.year);
+            textBoxPageResult.checkResult("Subjects", testData.role);
+            textBoxPageResult.checkResult("Hobbies", testData.hobbies);
+            textBoxPageResult.checkResult("Picture", testData.picture);
+            textBoxPageResult.checkResult("Address", testData.currentAddress);
+            textBoxPageResult.checkStateAndCity("State and City", testData.state, testData.city);
+            textBoxPageResult.checkSubmit();
+        });
 
     }
 }
