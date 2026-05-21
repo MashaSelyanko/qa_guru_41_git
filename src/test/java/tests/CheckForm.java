@@ -8,6 +8,7 @@ import org.junit.jupiter.api.*;
 import pages.*;
 import pages.components.*;
 import testdata.*;
+
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 import static utils.RandomUtils.*;

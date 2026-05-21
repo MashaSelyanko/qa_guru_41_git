@@ -18,15 +18,15 @@ public class TestBase {
         Configuration.browser = "chrome";
         Configuration.browserSize = "1920x1080";
         Configuration.baseUrl = "https://qa-guru.github.io";
-        Configuration.timeout = 10000; // default 4000
+        Configuration.timeout = 10000;          // default 4000
 
 
         //для записи видео. Это объект свойств chrome
         ChromeOptions options = new ChromeOptions();
         options.setCapability("selenoid:options", Map.of(
-                "enableVNC", true,
+                "enableVNC", true,      //потоковое видео
                 "enableVideo", true
-        )); //можно добавить сертификат и пр.настройки
+        ));                                     //можно добавить сертификат и пр.настройки
         Configuration.browserCapabilities = options;
         //удаленная ферма
         Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
@@ -43,10 +43,11 @@ public class TestBase {
 
         Attach.attachAsText("Some file", "Some content");
     }
-        void tearDown () {
-            closeWebDriver();
-        }
+
+    void tearDown() {
+        closeWebDriver();
     }
+}
 
 
 
