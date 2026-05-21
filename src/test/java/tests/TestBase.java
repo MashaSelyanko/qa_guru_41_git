@@ -39,13 +39,8 @@ public class TestBase {
         Attach.pageSource();
         Attach.browserConsoleLogs();
         Attach.addVideo();
-
-
-        Attach.attachAsText("Some file", "Some content");
-    }
-
-    void tearDown() {
         closeWebDriver();
+
     }
 }
 
