@@ -19,14 +19,12 @@ public class FileParsingTests {
 
     private ClassLoader cl = FileParsingTests.class.getClassLoader();
 
-
     //читаем содержимое zip- архива
     @Test
     void pdfFileParsingTest() throws Exception {
-        try (ZipInputStream zis = new ZipInputStream(
-                getClass().getClassLoader().getResourceAsStream("TestsFile.zip")
-        )) {
-            ZipEntry entry;
+        try (InputStream is = cl.getResourceAsStream("TestsFile.zip");
+             ZipInputStream zis = new ZipInputStream(is)) {
+              ZipEntry entry;
 
             while ((entry = zis.getNextEntry()) != null) {
                 if (entry.getName().endsWith("pdf")) {
@@ -39,28 +37,41 @@ public class FileParsingTests {
 
     @Test
     void xlsxFileParsingTest() throws Exception {
-        open("https://sample.cat/ru/xls?ysclid=moy8ennjqb803345076");
-        File downloaded = $("[href='https://disk.sample.cat/samples/xlsx/sample1.xlsx']").download();
-        XLS xls = new XLS(downloaded);
-        String actualValue = xls.excel.getSheetAt(0).getRow(3).getCell(2).getStringCellValue();
+        try (InputStream is = cl.getResourceAsStream("TestsFile.zip");
+             ZipInputStream zis = new ZipInputStream(is)) {
+            ZipEntry entry;
 
-        Assertions.assertTrue(actualValue.contains("Jane"));
+            while ((entry = zis.getNextEntry()) != null) {
+                if (entry.getName().endsWith("xls")) {
+                    XLS xls = new XLS(zis);
+                    String actualValue = xls.excel.getSheetAt(0)
+                            .getRow(3)
+                            .getCell(2).getStringCellValue();
+                    Assertions.assertTrue(actualValue.contains("Jane"));
+                }
+            }
+        }
     }
 
-    @Test
-    void csvFileParsingTest() throws Exception {
-     //   open("https://samplelib.com/ru/sample-csv.html?ysclid=moyha62jsy922599676");
-try (InputStream is = cl.getResourceAsStream("sample-simple.csv");
-        CSVReader csvReader = new CSVReader(new InputStreamReader(is))) {
-    List<String[]> data = csvReader.readAll();
-    Assertions.assertEquals(11, data.size());
-    Assertions.assertArrayEquals(
-            new String[]{"id","first_name","last_name","email","age","city","salary","joined"},
-            data.get(0));
+                @Test
+                void csvFileParsingTest () throws Exception {
+                    try (InputStream is = cl.getResourceAsStream("TestsFile.zip");
+                         ZipInputStream zis = new ZipInputStream(is)) {
+                        ZipEntry entry;
 
-}
-    }
-
-}
-
+                        while ((entry = zis.getNextEntry()) != null) {
+                            if (entry.getName().endsWith("csv")) {
+                                CSVReader csvReader = new CSVReader(new InputStreamReader(zis));
+                                List<String[]> data = csvReader.readAll();
+                                Assertions.assertEquals(11, data.size());
+                                Assertions.assertArrayEquals(
+                                        new String[]
+                                                {"id", "first_name", "last_name", "email", "age", "city", "salary", "joined"},
+                                        data.get(0)
+                                );
+                            }
+                        }
+                    }
+                }
+            }
 
