@@ -1,0 +1,10 @@
+token_bot: 8624246165:AAGczQ9S0s3eGLvD_bGT5vcHwAeu-y9e5AA
+
+ https://api.telegram.org/bot8624246165:AAGczQ9S0s3eGLvD_bGT5vcHwAeu-y9e5AA/getUpdates
+
+ sender_chat": {
+           "id: -1003968343892"}
+
+           curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "1003968343892", "text": "This is a test from Мои скрины", "disable_notification": true}' https://api.telegram.org/bot8624246165:AAGczQ9S0s3eGLvD_bGT5vcHwAeu-y9e5AA/sendMessage
+
+           java "-DconfigFile=notifications/config.json" -jar ./notifications/allure-notifications-4.6.1.jar

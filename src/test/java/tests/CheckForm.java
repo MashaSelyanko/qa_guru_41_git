@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import pages.TextBoxPage;
 import pages.components.TextBoxPageResult;
 import testdata.TestData;
-
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static io.qameta.allure.Allure.step;
 import static utils.RandomUtils.selectCity;

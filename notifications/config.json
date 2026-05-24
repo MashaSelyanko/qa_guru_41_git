@@ -1,0 +1,17 @@
+{
+  "base": {
+    "project": "some project name",
+    "environment": "qa.guru",
+    "comment": "comment here @iterkin",
+    "reportLink": "https://jenkins.autotests.cloud/view/java_base/job/41-MashaSelyanko_pageobject_and_allure_report_and_parametrized/",
+    "language": "en",
+    "messenger": "telegram",
+    "allureFolder": "build/reports/allure-report/allureReport",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "8624246165:AAGczQ9S0s3eGLvD_bGT5vcHwAeu-y9e5AA",
+    "chat": "-1003968343892",
+    "replyTo": ""
+  }
+}
