@@ -1,34 +1,32 @@
 package tests;//import com.codeborne.selenide.WebElementCondition;
 
-import com.codeborne.selenide.SelenideTargetLocator;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Story;
 import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.*;
-import pages.*;
-import pages.components.*;
-import testdata.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import pages.TextBoxPage;
+import pages.components.TextBoxPageResult;
+import testdata.TestData;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static io.qameta.allure.Allure.step;
-import static utils.RandomUtils.*;
+import static utils.RandomUtils.selectCity;
 
 @Story("Registration form")
 public class CheckForm extends TestBase {
     TestData testData = new TestData();
-
     TextBoxPage textBoxPage = new TextBoxPage();
     TextBoxPageResult textBoxPageResult = new TextBoxPageResult();
 
     @BeforeEach
-        //метод/аннотация - инструмент для выполнения перед началом каждого теста
     void prepareRandomData() {
         testData.city = selectCity(testData.state);
     }
 
     void addListener() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-
     }               //добавляет скриншоты
 
     @Test
@@ -36,11 +34,9 @@ public class CheckForm extends TestBase {
     void fillAndCheckFormTests_with_faker() {
         step("Open registration form", () -> {
             textBoxPage.openPage();
+            executeJavaScript("document.querySelector('#fixedban')?.remove()");
+            executeJavaScript("document.querySelector('footer')?.remove()");
         });
-
-        executeJavaScript("$('#fixedban').remove()");
-        executeJavaScript("$('footer').remove()"); //скрываем рекламу
-
 
         step("Fill registration form", () -> {
             textBoxPage.typeUserFirstName(testData.firstName);

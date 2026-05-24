@@ -1,5 +1,6 @@
 package pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import pages.components.CalendarComponent;
@@ -29,9 +30,9 @@ public class TextBoxPage {
     private SelenideElement textErrorAutomation = $("#formError"); //текст негативного теста
 
     //Actions
-    @Step("Open registration page /one-page-form/automation-practice-form.html")
+    @Step("Open registration page /automation-practice-form")
     public void openPage() {
-        open("/one-page-form/automation-practice-form.html");
+        open("/automation-practice-form");
     }
 
     @Step("Type first name \"{value}\"")
@@ -46,7 +47,7 @@ public class TextBoxPage {
 
     @Step("Type email \"{value}\"")
     public void typeUserEmail(String value) {
-        userEmailInput.setValue(value);
+        userEmailInput.shouldBe(Condition.editable).setValue(value); //+ждем возможность редактирования
     }
 
     @Step("Type gender \"{gender}\"")
@@ -68,9 +69,9 @@ public class TextBoxPage {
     }
 
     public void setSubjectInput(String role) {
-        userSubjectInput.scrollTo().
-                setValue(role).
-                pressEnter();
+        userSubjectInput.click();
+        userSubjectInput.sendKeys(role);
+        userSubjectInput.pressEnter();
     }
 
     @Step("Type hobbies \"{hobbies}\"")
@@ -102,15 +103,25 @@ public class TextBoxPage {
 
     @Step("Check date")
     public void checkDate(String key, String day, String month, String year) {
-        String expectedDate = String.format("%s-%02d-%02d",
-                year,
-                Integer.parseInt(month),
-                Integer.parseInt(day));
-        outputResults.$(byText(key))
+        String monthName = month;
+        // Если вместо названия пришло число (например, "6"), переводим его в текст
+        if (month.matches("\\d+")) {
+            int monthIndex = Integer.parseInt(month) - 1; // "6" станет индексом 5
+            String[] months = {
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+            };
+
+            if (monthIndex >= 0 && monthIndex < 12) {
+                monthName = months[monthIndex]; // Извлечет "June"
+            }
+        }
+        // Собираем финальную строку для проверки
+        String expectedDate = day + " " + monthName + "," + year;
+        outputResults.$(com.codeborne.selenide.Selectors.byText(key))
                 .parent()
-                .$$("td")
-                .get(1)
-                .shouldHave(text(expectedDate));
+                .$("td", 1)
+                .shouldHave(com.codeborne.selenide.Condition.text(expectedDate));
     }
 
     @Step("Check should have")

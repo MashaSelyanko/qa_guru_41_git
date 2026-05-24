@@ -7,7 +7,7 @@ group = "selyanko.masha"
 version = "1.0-SNAPSHOT"
 
 
-val slf4jVersion = "2.0.17"
+def slf4jVersion = "2.0.17"
 allure {
         version.set("2.19.0")
     adapter {                                   // отвечает за появление папки build/allure-results
@@ -32,12 +32,13 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("com.codeborne:pdf-test:1.5.0")
     testImplementation("com.codeborne:xls-test:1.4.3")
-    implementation("com.opencsv:opencsv:5.12.0")
-    implementation("com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.21.3")
-    implementation("io.qameta.allure:allure-selenide:2.34.0")
+    testImplementation("com.opencsv:opencsv:5.12.0")
+    testImplementation("com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.21.3")
+    testImplementation("io.qameta.allure:allure-selenide:2.34.0")
 
     }
 
-tasks.test {
+tasks.withType(Test) {
     useJUnitPlatform()
+    systemProperties(System.getProperties())
 }
