@@ -10,6 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.DesiredCapabilities;
+
 import java.util.Map;
 
 public class TestBase {
@@ -27,7 +28,7 @@ public class TestBase {
         Configuration.browserVersion = System.getProperty("browserVersion", "128.0");
         Configuration.headless = Boolean.parseBoolean(System.getProperty("headless", "false"));
         Configuration.browserSize = System.getProperty("browserResolution", "1920x1080");
-        Configuration.baseUrl = System.getProperty("testSiteBaseUrl", "https://demoqa.com");
+        Configuration.baseUrl = System.getProperty("testSiteBaseUrl", "https://www.bspb.ru/");
         Configuration.timeout = 4000;
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -43,8 +44,6 @@ public class TestBase {
                 "@" +
                 System.getProperty("remoteBrowserUrl", "selenoid.autotests.cloud/wd/hub");
     }
-    //удаленная ферма
-    //Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
 
     @AfterEach
     void addAttachments() {
@@ -64,6 +63,3 @@ public class TestBase {
         }
     }
 }
-
-
-
