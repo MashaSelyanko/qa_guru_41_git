@@ -10,22 +10,50 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
 import java.util.Map;
 
 public class TestBase {
 
+    static {
+        String providedUrl = System.getProperty("testSiteBaseUrl", "https://www.bspb.ru");
+
+    // Если передан localhost, проверяем, задан ли он намеренно или это дефолт от Gradle
+        if(providedUrl.contains("localhost")&&"http://localhost:8080"
+                .equals(providedUrl.trim()))
+
+    {
+        // Если это дефолтный пустой localhost без запущенного сервера, берем стабильный прод
+        Configuration.baseUrl = "https://www.bspb.ru";
+    } else
+
+    {
+        Configuration.baseUrl = providedUrl;
+    }
+    // Защита от пропущенного слэша на конце (чтобы не падало с invalid argument)
+        if(!Configuration.baseUrl.endsWith("/"))
+
+    {
+        Configuration.baseUrl += "/";
+    }
+}
+
     @BeforeEach
+        //добавляет скриншоты
     void addListener() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-        // драйвер запускается открытием базового URL или пустой страницы
-        Selenide.open("");
+        Configuration.pageLoadStrategy = "eager"; //шаги теста начинаются до полной загрузки страницы
+        //как только загрузились кнопки и текст
     }
 
     @BeforeAll
     static void beforeAll() {
-        Configuration.browser = System.getProperty("browser", "chrome");
-        Configuration.browserVersion = System.getProperty("browserVersion", "128.0");
+        //меняем на edge для запуска локально и проверки pdf-файла
+        //+закачали файл msedgedriver.exe
+        //Configuration.browser = System.getProperty("browser", "chrome");
+        Configuration.browser = System.getProperty("browser", "edge");
+        System.setProperty("webdriver.edge.driver", "./msedgedriver.exe");
+
+        //Configuration.browserVersion = System.getProperty("browserVersion", "128.0");
         Configuration.headless = Boolean.parseBoolean(System.getProperty("headless", "false"));
         Configuration.browserSize = System.getProperty("browserResolution", "1920x1080");
         Configuration.baseUrl = System.getProperty("testSiteBaseUrl", "https://www.bspb.ru/");
@@ -37,29 +65,30 @@ public class TestBase {
                 "enableVideo", true
         ));
         Configuration.browserCapabilities = capabilities;
-        Configuration.remote = "https://" +
-                System.getProperty("remoteBrowserUrlLogin", "user1") + // второе значение - по умолчанию
-                ":" +
-                System.getProperty("remoteBrowserUrlPassword", "1234") +
-                "@" +
-                System.getProperty("remoteBrowserUrl", "selenoid.autotests.cloud/wd/hub");
-    }
+//        Configuration.remote = "https://" +
+//                System.getProperty("remoteBrowserUrlLogin", "user1") + // второе значение - по умолчанию
+//                ":" +
+//                System.getProperty("remoteBrowserUrlPassword", "1234") +
+//                "@" +
+//                System.getProperty("remoteBrowserUrl", "selenoid.autotests.cloud/wd/hub");
+}
 
-    @AfterEach
-    void addAttachments() {
-        // существует ли веб-драйвер в текущем потоке
-        if (WebDriverRunner.hasWebDriverStarted()) {
-            try {
-                //добавляем вложения Allure только при живом драйвере
-                Attach.screenshotAs("Last screenshot");
-                Attach.pageSource();
-                Attach.browserConsoleLogs();
-            } catch (Exception e) {
-                System.err.println("Не удалось сохранить вложения Allure: " + e.getMessage());
-            } finally {
-                // закрываем веб-драйвер после каждого теста
-                Selenide.closeWebDriver();
+        @AfterEach
+        void addAttachments () {
+            // существует ли веб-драйвер в текущем потоке
+            if (WebDriverRunner.hasWebDriverStarted()) {
+                try {
+                    //добавляем вложения Allure только при живом драйвере
+                    Attach.screenshotAs("Last screenshot");
+                    Attach.pageSource();
+                    Attach.browserConsoleLogs();
+                } catch (Exception e) {
+                    System.err.println("Не удалось сохранить вложения Allure: " + e.getMessage());
+                } finally {
+                    // закрываем веб-драйвер после каждого теста
+                    Selenide.closeWebDriver();
+                }
             }
         }
     }
-}
+

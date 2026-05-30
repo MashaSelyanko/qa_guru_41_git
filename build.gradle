@@ -9,7 +9,7 @@ version = "1.0-SNAPSHOT"
 
 def slf4jVersion = "2.0.17"
 allure {
-        version.set("2.19.0")
+        version.set("2.29.0")
     adapter {                                   // отвечает за появление папки build/allure-results
         aspectjWeaver.set(true)                 //обработка аннотации @Step
         frameworks {
