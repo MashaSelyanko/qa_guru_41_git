@@ -47,11 +47,11 @@ public class TestBase {
 
     @BeforeAll
     static void beforeAll() {
-        //меняем на edge для запуска локально и проверки pdf-файла
+        //меняем на edge для запуска локально и проверки pdf-файла (строки 53-54 вкл., 52, 68-73 выкл.)
         //+закачали файл msedgedriver.exe
-        //Configuration.browser = System.getProperty("browser", "chrome");
-        Configuration.browser = System.getProperty("browser", "edge");
-        System.setProperty("webdriver.edge.driver", "./msedgedriver.exe");
+        Configuration.browser = System.getProperty("browser", "chrome");
+//        Configuration.browser = System.getProperty("browser", "edge");
+//        System.setProperty("webdriver.edge.driver", "./msedgedriver.exe");
 
         //Configuration.browserVersion = System.getProperty("browserVersion", "128.0");
         Configuration.headless = Boolean.parseBoolean(System.getProperty("headless", "false"));
@@ -65,12 +65,12 @@ public class TestBase {
                 "enableVideo", true
         ));
         Configuration.browserCapabilities = capabilities;
-//        Configuration.remote = "https://" +
-//                System.getProperty("remoteBrowserUrlLogin", "user1") + // второе значение - по умолчанию
-//                ":" +
-//                System.getProperty("remoteBrowserUrlPassword", "1234") +
-//                "@" +
-//                System.getProperty("remoteBrowserUrl", "selenoid.autotests.cloud/wd/hub");
+        Configuration.remote = "https://" +
+                System.getProperty("remoteBrowserUrlLogin", "user1") + // второе значение - по умолчанию
+                ":" +
+                System.getProperty("remoteBrowserUrlPassword", "1234") +
+                "@" +
+                System.getProperty("remoteBrowserUrl", "selenoid.autotests.cloud/wd/hub");
 }
 
         @AfterEach
