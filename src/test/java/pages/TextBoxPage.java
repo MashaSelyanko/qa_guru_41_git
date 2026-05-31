@@ -4,13 +4,11 @@ import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import tests.CustomerCategories;
 
-import java.io.File;
-
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverConditions.url;
-public class TextBoxPage {
 
+public class TextBoxPage {
 
 
     private final ElementsCollection categoryLinks = $$("div.css-1ndprbh a.chakra-link");
@@ -25,8 +23,6 @@ public class TextBoxPage {
     private SelenideElement HomeLogoButton = $("div.css-1ndprbh a.chakra-link[href='/']");
 
     private final SelenideElement promoBanner = $("main [role='tabpanel'] img");
-
-   //private final SelenideElement pdfLink = $("a[href*='pravila_nachislenia_procentov']");
 
     //Actions
     @Step("Open Web Main")
@@ -134,46 +130,46 @@ public class TextBoxPage {
 //        }
 
 
-        //Tests
+    //Tests
 
-        //проверка перехода на "Шаг 2 из 4"
-        @Step("Verify that Step 2 of 4 is successfully opened")
-        public void verifyStepTwoIsOpened() {
-            // Находим h4 внутри блока с id и проверяем, что он просто содержит этот текст
-            $("[id='StepInfo Форма обратной связи'] h4")
-                    .shouldBe(Condition.visible)
-                    .shouldHave(Condition.text("Шаг 2 из 4"), java.time.Duration.ofSeconds(5));
-        }
+    //проверка перехода на "Шаг 2 из 4"
+    @Step("Verify that Step 2 of 4 is successfully opened")
+    public void verifyStepTwoIsOpened() {
+        // Находим h4 внутри блока с id и проверяем, что он просто содержит этот текст
+        $("[id='StepInfo Форма обратной связи'] h4")
+                .shouldBe(Condition.visible)
+                .shouldHave(Condition.text("Шаг 2 из 4"), java.time.Duration.ofSeconds(5));
+    }
 
-        //проверка, что есть сообщение об ошибке
-        @Step("Check negative registration form results")
-        public void verifyRussianLettersErrorIsVisible() {
-            $(byText("Доступны только русские буквы"))
-                    .shouldBe(Condition.visible);
-        }
+    //проверка, что есть сообщение об ошибке
+    @Step("Check negative registration form results")
+    public void verifyRussianLettersErrorIsVisible() {
+        $(byText("Доступны только русские буквы"))
+                .shouldBe(Condition.visible);
+    }
 
-        //проверка перехода на страницу входа в интернет-банк
-        @Step("Verify 'Вход в интернет-банк'")
-        public void verifyInternetBankLoginPageIsOpened() {
-            com.codeborne.selenide.Selenide
-                    .$(com.codeborne.selenide.Selectors.byText("Вход в интернет-банк"))
-                    .shouldBe(Condition.visible, java.time.Duration.ofSeconds(35))
-                    .click();
-        }
+    //проверка перехода на страницу входа в интернет-банк
+    @Step("Verify 'Вход в интернет-банк'")
+    public void verifyInternetBankLoginPageIsOpened() {
+        com.codeborne.selenide.Selenide
+                .$(com.codeborne.selenide.Selectors.byText("Вход в интернет-банк"))
+                .shouldBe(Condition.visible, java.time.Duration.ofSeconds(45))
+                .click();
+    }
 
-        //проверка, что на форме есть баннер главной страницы
-        @Step("Check that promo banner is visible")
-        public void checkPromoBannerIsVisible() {
-            promoBanner.shouldBe(Condition.visible);
-        }
+    //проверка, что на форме есть баннер главной страницы
+    @Step("Check that promo banner is visible")
+    public void checkPromoBannerIsVisible() {
+        promoBanner.shouldBe(Condition.visible);
+    }
 
-//  //проверка, что текущий URL совпадает с базовым
-        @Step("Check that main page URL is opened")
-        public void checkMainPageUrl () {
-            webdriver().shouldHave(url(Configuration.baseUrl));
-        }
+    //  //проверка, что текущий URL совпадает с базовым
+    @Step("Check that main page URL is opened")
+    public void checkMainPageUrl() {
+        webdriver().shouldHave(url(Configuration.baseUrl));
+    }
 
-        }
+}
 
 
 

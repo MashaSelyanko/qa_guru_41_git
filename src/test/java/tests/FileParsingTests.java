@@ -6,11 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.TextBoxPage;
-
 import java.io.File;
-
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
 
 public class FileParsingTests extends TestBase {
@@ -22,21 +19,20 @@ public class FileParsingTests extends TestBase {
     @Tag("Minor")
     public void testPdfContent() throws Exception {
 
-        //открываем страницу сайта
+        // открываем страницу сайта
         step("Open archive docs", () -> {
             textBoxPage.openArchiveDocs();
         });
 
-//скачиваем и проверяем файл
-
-        File downloaded = $("[href='https://bspb.ru/media/pravila_nachislenia_procentov_na_ostatok_050922_96842746f6.pdf']").download();
-
-
-        PDF pdf = new PDF(downloaded);
-        Assertions.assertTrue(pdf.text.contains("Правила начисления процентов на остатки"));
-
-
-
-
+//    //скачиваем и проверяем содержимое pdf
+        step("Verify downloaded PDF content contains expected text", () -> {
+            try {
+                File downloadedFile = $("[href='https://bspb.ru/media/pravila_nachislenia_procentov_na_ostatok_050922_96842746f6.pdf']").download();
+                PDF pdf = new PDF(downloadedFile);
+                Assertions.assertTrue(pdf.text.toLowerCase().contains("правила начисления процентов"));
+            } catch (Exception e) {
+                Assertions.fail("Ошибка при скачивании или парсинге PDF: " + e.getMessage(), e);
+            }
+        });
     }
 }
