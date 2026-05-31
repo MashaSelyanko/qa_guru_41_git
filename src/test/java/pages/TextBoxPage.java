@@ -3,7 +3,6 @@ package pages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import tests.CustomerCategories;
-
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverConditions.url;
@@ -51,6 +50,7 @@ public class TextBoxPage {
         categoryLinks.filterBy(Condition.partialText(category.typeName))
                 .first()
                 .click();
+        com.codeborne.selenide.Selenide.sleep(1000);
     }
 
     //ждем, что в подменю появится хотя бы одна кнопка выбранной категории
@@ -117,19 +117,7 @@ public class TextBoxPage {
     @Step("Click Home logo")
     public void clickHomeLogo() {
         HomeLogoButton.shouldBe(com.codeborne.selenide.Condition.visible).click();
-        com.codeborne.selenide.Selenide.sleep(1000);
-    }
-
-//    public String getPdfDocumentUrl() {
-//        return pdfLink
-//                .shouldBe(Condition.visible) // Гарантируем, что элемент загрузился
-//                .getAttribute("href");
-//    }
-//
-//        public java.io.File downloadPdfFile() {
-//            return pdfLink.shouldBe(Condition.visible).download();
-//        }
-
+            }
 
     //Tests
 
