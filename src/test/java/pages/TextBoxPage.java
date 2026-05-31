@@ -117,6 +117,7 @@ public class TextBoxPage {
     @Step("Click Home logo")
     public void clickHomeLogo() {
         HomeLogoButton.shouldBe(com.codeborne.selenide.Condition.visible).click();
+        com.codeborne.selenide.Selenide.sleep(1000);
     }
 
 //    public String getPdfDocumentUrl() {
