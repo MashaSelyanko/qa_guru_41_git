@@ -39,14 +39,14 @@ public class TestBase {
 
     @BeforeEach
         //добавляет скриншоты
-    void addListener() {
+    void init() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
         Configuration.pageLoadStrategy = "eager"; //шаги теста начинаются до полной загрузки страницы
         //как только загрузились кнопки и текст
     }
 
     @BeforeAll
-    static void beforeAll() {
+    static void setup() {
         //меняем на edge для запуска локально и проверки pdf-файла (строки 53-54 вкл., 52, 68-73 выкл.)
         //+закачали файл msedgedriver.exe
         Configuration.browser = System.getProperty("browser", "chrome");
@@ -74,7 +74,7 @@ public class TestBase {
 }
 
         @AfterEach
-        void addAttachments () {
+        void tearDown () {
             // существует ли веб-драйвер в текущем потоке
             if (WebDriverRunner.hasWebDriverStarted()) {
                 try {
