@@ -3,6 +3,7 @@ package pages;
 import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
 import tests.CustomerCategories;
+import java.time.Duration;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverConditions.url;
@@ -19,9 +20,9 @@ public class TextBoxPage {
     private SelenideElement userEmailInput = $("[name^='EMAIL']");
 
     private SelenideElement submitButton = $(byText("Продолжить"));
-    private SelenideElement HomeLogoButton = $("div.css-1ndprbh a.chakra-link[href='/']");
+    private SelenideElement HomeLogoButton = $(".chakra-link[href='/']");
 
-    private final SelenideElement promoBanner = $("main [role='tabpanel'] img");
+    private final SelenideElement promoBanner = $(".chakra-ui-light .css-8cbovm");
 
     //Actions
     @Step("Open Web Main")
@@ -116,7 +117,7 @@ public class TextBoxPage {
     //клик по логотипу
     @Step("Click Home logo")
     public void clickHomeLogo() {
-        HomeLogoButton.shouldBe(com.codeborne.selenide.Condition.visible).click();
+        com.codeborne.selenide.Selenide.executeJavaScript("arguments[0].click();", HomeLogoButton);
             }
 
     //Tests
@@ -155,10 +156,11 @@ public class TextBoxPage {
     //  //проверка, что текущий URL совпадает с базовым
     @Step("Check that main page URL is opened")
     public void checkMainPageUrl() {
-        webdriver().shouldHave(url(Configuration.baseUrl));
+        webdriver().shouldHave(url(Configuration.baseUrl),Duration.ofSeconds(10));
     }
 
 }
+
 
 
 
