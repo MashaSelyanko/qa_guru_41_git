@@ -1,15 +1,12 @@
 package tests;//import com.codeborne.selenide.WebElementCondition;
 
-import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Story;
-import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.TextBoxPage;
 import pages.components.TextBoxPageResult;
 import testdata.TestData;
-
 import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static io.qameta.allure.Allure.step;
 import static utils.RandomUtils.selectCity;
@@ -24,10 +21,6 @@ public class CheckForm extends TestBase {
     void prepareRandomData() {
         testData.city = selectCity(testData.state);
     }
-
-    void addListener() {
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-    }               //добавляет скриншоты
 
     @Test
     @DisplayName("Fill and check form tests")
