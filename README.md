@@ -34,7 +34,7 @@
 **(https://jenkins.autotests.cloud/job/41-MashaSelyanko_proect1/)**
 
 <p align="center">  
-<img src="screen/Allure report - Status.png" alt="Jenkins" width="950"/></a>  
+<img src="images/screen/Allure report - Status.png" alt="Jenkins" width="950"/></a>  
 </p>
 
 
@@ -60,19 +60,19 @@ java "-DconfigFile=notifications/config.json" -jar ./notifications/allure-notifi
 ## Основная страница отчёта
 
 <p align="center">  
-<img src="screen/Allure report.png" src="screen/Allure report.png" width="850">  
+<img src="images/screen/Allure report.png" src="images/screen/Allure report.png" width="850">  
 </p>  
 
 ## Сьюты
 
 <p align="center">  
-<img title="Allure Tests" src="screen/Allure report - Suites2.png" width="850">  
+<img title="Allure Tests" src="images/screen/Allure report - Suites2.png" width="850">  
 </p>
 
 ## Graphs
 
 <p align="center">  
-<img title="Allure Tests" src="screen/Allure report - Graphs.png" width="850">  
+<img title="Allure Tests" src="images/screen/Allure report - Graphs.png" width="850">  
 </p>
 
 
@@ -82,19 +82,19 @@ java "-DconfigFile=notifications/config.json" -jar ./notifications/allure-notifi
 ## Allure TestOps Запуски
 
 <p align="center">  
-<img title="Allure TestOps Dashboard" src="screen/AllureOps - тест - Запуски.png" width="850">  
+<img title="Allure TestOps Dashboard" src="images/screen/AllureOps - тест - Запуски.png" width="850">  
 </p>  
 
 ## Авто и Ручные тест-кейсы
 
 <p align="center">  
-<img title="Allure Graphics" src="screen/AllureOps - тест - кейсы.png" width="850">   
+<img title="Allure Graphics" src="images/screen/AllureOps - тест - кейсы.png" width="850">   
 </p>
 
 ## <img alt="Allure" height="25" src="images/logo/Jira.svg" width="25"/></a> Интеграция с <a target="_blank" href="https://jira.autotests.cloud/browse/HOMEWORK-689">Jira</a>
 
 <p align="center">  
-<img title="Jira" src="screen/Jira.png" width="">  
+<img title="Jira" src="images/screen/Jira.png" width="">  
 </p>
 
 ____
