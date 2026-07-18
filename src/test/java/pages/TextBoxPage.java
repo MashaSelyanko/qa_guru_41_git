@@ -30,21 +30,6 @@ public class TextBoxPage {
         open("");
     }
 
-    @Step("Open feedback Form")
-    public void openFeedbackForm() {
-        String fullUrl = Configuration.baseUrl.replaceAll("/$", "")
-                + "/retail/feedback/fl";
-        open(fullUrl);
-    }
-
-    @Step("Open archive_docs")
-    public void openArchiveDocs() {
-        String fullUrl = Configuration.baseUrl.replaceAll("/$", "")
-                + "/business/settlement-service/tariffs/achive-docs";
-        open(fullUrl);
-    }
-
-
     @Step("Check header contains expected category")
     //выбираем категорию
     public void selectCategory(CustomerCategories category) {
@@ -135,7 +120,7 @@ public class TextBoxPage {
     @Step("Check negative registration form results")
     public void verifyRussianLettersErrorIsVisible() {
         $(byText("Доступны только русские буквы"))
-                .shouldBe(Condition.visible);
+                .shouldBe(Condition.visible, Duration.ofSeconds(5));
     }
 
     //проверка перехода на страницу входа в интернет-банк

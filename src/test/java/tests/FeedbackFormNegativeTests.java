@@ -1,7 +1,7 @@
 package tests;
 
 import io.qameta.allure.Story;
-
+import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -21,7 +21,7 @@ public class FeedbackFormNegativeTests extends TestBase {
     @Tag("Blocker")
     void fillFeedbackFormNegative() {
         step("Open feedback form", () -> {
-            textBoxPage.openFeedbackForm();
+            open("/retail/feedback/fl");
         });
 
         step("Type full name: " + testData.fullName, () -> {

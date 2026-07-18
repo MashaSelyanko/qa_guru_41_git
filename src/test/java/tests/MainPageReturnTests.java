@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.TextBoxPage;
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
+import static com.codeborne.selenide.Selenide.open;
 
 public class MainPageReturnTests extends TestBase {
 
@@ -17,7 +18,7 @@ public class MainPageReturnTests extends TestBase {
     void openFeedbackForm() {
 
         step("Open feedback form", () -> {
-            textBoxPage.openFeedbackForm();
+            open("/retail/feedback/fl");
         });
 
         step("Check submenu Buttons", () -> {

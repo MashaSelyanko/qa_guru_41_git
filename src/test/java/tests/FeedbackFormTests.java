@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.TextBoxPage;
 import testdata.TestData;
+
+import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
 
 @Story("FeedbackForm")
@@ -19,7 +21,7 @@ public class FeedbackFormTests extends TestBase {
     @Tag("Blocker")
     void fillFeedbackForm() {
         step("Open feedback form", () -> {
-            textBoxPage.openFeedbackForm();
+            open("/retail/feedback/fl");
         });
 
         step("Type full name: " + testData.fullName, () -> {

@@ -9,6 +9,7 @@ import pages.TextBoxPage;
 import java.io.File;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
+import static com.codeborne.selenide.Selenide.open;
 
 public class FileParsingTests extends TestBase {
 
@@ -21,7 +22,7 @@ public class FileParsingTests extends TestBase {
 
         // открываем страницу сайта
         step("Open archive docs", () -> {
-            textBoxPage.openArchiveDocs();
+            open("/business/settlement-service/tariffs/achive-docs");
         });
 
 //    //скачиваем и проверяем содержимое pdf
