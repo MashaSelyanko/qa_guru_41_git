@@ -15,7 +15,6 @@ dependencies {
     testImplementation("com.codeborne:selenide:7.17.0")
     testImplementation("org.aeonbits.owner:owner:1.0.12")
     testImplementation("com.github.javafaker:javafaker:1.0.2")
-//    testImplementation("io.github.bonigarcia:webdrivermanager:5.2.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

@@ -21,5 +21,10 @@ public interface WebConfig extends Config {
     String getRemoteUrl();
 
     @Key("browserSize")
+    @DefaultValue("1920x1080")
     String getBrowserSize();
+
+    @Key("baseUrl")
+    @DefaultValue("https://qa-guru.github.io/")
+    String getBaseUrl();
 }
