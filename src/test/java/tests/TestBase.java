@@ -39,12 +39,13 @@ public class TestBase {
         Configuration.headless = Boolean.parseBoolean(System.getProperty("headless", "false"));
         Configuration.browserSize = System.getProperty("browserResolution", "1920x1080");
         Configuration.baseUrl = System.getProperty("testSiteBaseUrl", "https://www.bspb.ru/");
-        Configuration.timeout = 4000;
+        Configuration.timeout = Long.parseLong(System.getProperty("selenide.timeout", "4000"));
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
                 "enableVNC", true,
-                "enableVideo", true
+                "enableVideo", true,
+                "screenResolution", System.getProperty("browserResolution", "1920x1080") + "x24"
         ));
         Configuration.browserCapabilities = capabilities;
         Configuration.remote = "https://" +
