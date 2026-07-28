@@ -82,11 +82,12 @@ public class TextBoxPage {
         submitButton.click();
     }
 
-    //клик по кнопке "Войти" в хэдере
+    //клик по кнопке "Войти" в хэдере, ожидание выпадающего меню
     @Step("Click the 'Login' button in header")
     public void clickLoginButton() {
         com.codeborne.selenide.Selenide.
                 $(com.codeborne.selenide.Selectors.byText("Войти")).click();
+        $(byText("Интернет-банк ФЛ")).shouldBe(Condition.visible, Duration.ofSeconds(8));
     }
 
     // внутри родительского выпадающего меню ищем текст+клик
