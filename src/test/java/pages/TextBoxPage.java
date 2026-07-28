@@ -87,7 +87,7 @@ public class TextBoxPage {
     public void clickLoginButton() {
         com.codeborne.selenide.Selenide.
                 $(com.codeborne.selenide.Selectors.byText("Войти")).click();
-        $(byText("Интернет-банк ФЛ")).shouldBe(Condition.visible, Duration.ofSeconds(8));
+        $(byText("Интернет-банк ФЛ")).shouldBe(Condition.visible, Duration.ofSeconds(8)).click();
     }
 
     // внутри родительского выпадающего меню ищем текст+клик
