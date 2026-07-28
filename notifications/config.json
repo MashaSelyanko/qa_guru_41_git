@@ -6,7 +6,7 @@
     "reportLink": "https://jenkins.autotests.cloud/view/java_base/job/41-MashaSelyanko_pageobject_and_allure_report_and_parametrized/",
     "language": "en",
     "messenger": "telegram",
-    "allureFolder": "allure-report",
+    "allureFolder": "C:/Users/masha/AppData/Local/Temp/4653605080624164802/allure-report",
     "enableChart": true
   },
   "telegram": {
