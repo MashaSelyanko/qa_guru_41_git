@@ -5,8 +5,10 @@ token_bot: 8624246165:AAGczQ9S0s3eGLvD_bGT5vcHwAeu-y9e5AA
  sender_chat": {
            "id: -1003968343892"}
 //для запуска в Терминале
-           curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "-1003968343892", "text": "This is a test from Мои скрины", "disable_notification": true}' https://api.telegram.org/bot8624246165:AAGczQ9S0s3eGLvD_bGT5vcHwAeu-y9e5AA/sendMessage
+           curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "-1003968343892", "text": "This is a test from My scrins", "disable_notification": true}' https://api.telegram.org/bot8624246165:AAGczQ9S0s3eGLvD_bGT5vcHwAeu-y9e5AA/sendMessage
 
 //до этого шага нужно вызвать allureReport, allureServe, взять ссылку на отчет из терминала и вставить ее в config.json
 // в ссылке заменить все обратные слэши на обычные
            java "-DconfigFile=notifications/config.json" -jar ./notifications/allure-notifications-4.6.1.jar
+
+
