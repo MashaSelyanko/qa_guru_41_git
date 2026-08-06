@@ -33,6 +33,7 @@ dependencies {
     testImplementation("com.codeborne:pdf-test:1.5.0")
     testImplementation("com.codeborne:xls-test:1.4.3")
     testImplementation("com.opencsv:opencsv:5.12.0")
+    testImplementation("org.aeonbits.owner:owner:1.0.12")
     testImplementation("com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.21.3")
     testImplementation("io.qameta.allure:allure-selenide:2.34.0")
 

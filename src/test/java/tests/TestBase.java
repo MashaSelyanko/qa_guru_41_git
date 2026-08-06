@@ -4,15 +4,21 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import config.WebConfig;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
 import java.util.Map;
 
 public class TestBase {
+
+    private static final WebConfig webConfig = ConfigFactory.create(WebConfig.class, System.getProperties());
 
     static {
         Configuration.baseUrl = System.getProperty("testSiteBaseUrl", "https://www.bspb.ru");
@@ -21,56 +27,64 @@ public class TestBase {
         }
     }
 
+    @BeforeAll
+    static void setupSelenideConfig() {
+        Configuration.timeout = 10000;
+        Configuration.baseUrl = webConfig.getBaseUrl();
+        Configuration.browser = webConfig.getBrowser();
+        Configuration.browserVersion = webConfig.getBrowserVersion();
+        Configuration.browserSize = webConfig.getBrowserSize();
+
+        // Удалённый запуск с видео
+        String remoteUrl = System.getProperty("remoteBrowserUrl", webConfig.getRemoteUrl());
+        if (remoteUrl != null && !remoteUrl.isEmpty()) {
+            Configuration.remote = String.format("https://%s:%s@%s",
+                    System.getProperty("remoteBrowserUrlLogin", "user1"),
+                    System.getProperty("remoteBrowserUrlPassword", "1234"),
+                    remoteUrl);
+
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setCapability("selenoid:options", Map.<String, Object>of(
+                    "enableVNC", true,
+                    "enableVideo", true,
+                    "screenResolution", System.getProperty("browserResolution", "1920x1080") + "x24"));
+            Configuration.browserCapabilities = capabilities;
+        } else {
+            Configuration.remote = webConfig.getRemoteUrl();
+        }
+    }
+
     @BeforeEach
-        //добавляет скриншоты
     void init() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
         Configuration.pageLoadStrategy = "eager";
     }
 
-    @BeforeAll
-    static void setup() {
-        //меняем на edge для запуска локально и проверки pdf-файла (строки 36-37 вкл., 35, 51-57 выкл.)
-        //+закачали файл msedgedriver.exe
-        Configuration.browser = System.getProperty("browser", "chrome");
-//        Configuration.browser = System.getProperty("browser", "edge");
-//        System.setProperty("webdriver.edge.driver", "./msedgedriver.exe");
+    @AfterEach
+    void tearDown() {
+        if (WebDriverRunner.hasWebDriverStarted()) {
+            // Сохраняем sessionId, ПОКА драйвер жив
+            String sessionId = null;
+            try {
+                sessionId = ((RemoteWebDriver) WebDriverRunner.getWebDriver())
+                        .getSessionId().toString();
+            } catch (Exception ignored) {
+            }
 
-        Configuration.headless = Boolean.parseBoolean(System.getProperty("headless", "false"));
-        Configuration.browserSize = System.getProperty("browserResolution", "1920x1080");
-        Configuration.baseUrl = System.getProperty("testSiteBaseUrl", "https://www.bspb.ru/");
-        Configuration.timeout = Long.parseLong(System.getProperty("selenide.timeout", "4000"));
+            try {
+                Attach.screenshotAs("Last screenshot");
+                Attach.pageSource();
+                Attach.browserConsoleLogs();
+            } catch (Exception e) {
+                System.err.println("Не удалось сохранить вложения Allure: " + e.getMessage());
+            } finally {
+                Selenide.closeWebDriver();
+            }
 
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
-                "enableVNC", true,
-                "enableVideo", true,
-                "screenResolution", System.getProperty("browserResolution", "1920x1080") + "x24"
-        ));
-        Configuration.browserCapabilities = capabilities;
-        Configuration.remote = "https://" +
-                System.getProperty("remoteBrowserUrlLogin", "user1") +
-                ":" +
-                System.getProperty("remoteBrowserUrlPassword", "1234") +
-                "@" +
-                System.getProperty("remoteBrowserUrl", "selenoid.autotests.cloud/wd/hub");
-}
-
-        @AfterEach
-        void tearDown () {
-            // существует ли веб-драйвер в текущем потоке
-            if (WebDriverRunner.hasWebDriverStarted()) {
-                try {
-                    //добавляем вложения Allure только при живом драйвере
-                    Attach.screenshotAs("Last screenshot");
-                    Attach.pageSource();
-                    Attach.browserConsoleLogs();
-                } catch (Exception e) {
-                    System.err.println("Не удалось сохранить вложения Allure: " + e.getMessage());
-                } finally {
-                    Selenide.closeWebDriver();
-                }
+            // Видео прикрепляем ПОСЛЕ закрытия, но с сохранённым sessionId
+            if (sessionId != null) {
+                Attach.addVideo(sessionId);
             }
         }
     }
-
+}
