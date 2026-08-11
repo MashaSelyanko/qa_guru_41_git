@@ -30,8 +30,7 @@
 - Переход на главную страницу сайта по кнопке Logo
 
 
-## <img alt="Jenkins" height="25" src="images/logo/Jenkins.svg" width="25"/> Сборка в [Jenkins]
-**(https://jenkins.autotests.cloud/job/41-MashaSelyanko_proect1/)**
+## <img alt="Jenkins" height="25" src="images/logo/Jenkins.svg" width="25"/> Сборка в [Jenkins](https://jenkins.autotests.cloud/job/41-MashaSelyanko_proect1/)
 
 <p align="center">  
 <img src="images/screen/Allure report - Status.png" alt="Jenkins" width="950"/></a>  
