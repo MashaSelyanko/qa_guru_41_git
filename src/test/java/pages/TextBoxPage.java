@@ -2,7 +2,7 @@ package pages;
 
 import com.codeborne.selenide.*;
 import io.qameta.allure.Step;
-import tests.CustomerCategories;
+import testdata.CustomerCategories;
 import java.time.Duration;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;

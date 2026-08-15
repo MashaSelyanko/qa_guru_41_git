@@ -43,9 +43,20 @@ public class Attach {
     }
 
     @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
-    public static String addVideo(String sessionId) {
-        return "<html><body><video width='100%' height='100%' controls autoplay><source src='"
-                + webConfig.getVideoBaseUrl() + "/" + sessionId + ".mp4"
-                + "' type='video/mp4'></video></body></html>";
+    public static String addVideo() {
+        String sessionId = Selenide.sessionId();
+
+        // Если без сессии (локальный запуск без Selenoid) — не добавляем битую ссылку
+        if (sessionId == null) {
+            return "<html><body><p>📹 Video not available (local run)</p></body></html>";
+        }
+
+        // Фиксированный URL для Selenoid — не конфигурируется
+        String videoBaseUrl = "https://selenoid.autotests.cloud/video";
+
+        return "<html><body>" +
+                "<video width='100%' height='100%' controls autoplay>" +
+                "<source src='" + videoBaseUrl + "/" + sessionId + ".mp4' type='video/mp4'>" +
+                "</video></body></html>";
     }
    }

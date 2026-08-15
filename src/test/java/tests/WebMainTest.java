@@ -7,6 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import pages.TextBoxPage;
+import testdata.CustomerCategories;
+
 import java.util.stream.Stream;
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
 

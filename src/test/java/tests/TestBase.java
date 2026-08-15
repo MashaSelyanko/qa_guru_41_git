@@ -35,22 +35,30 @@ public class TestBase {
         Configuration.browserVersion = webConfig.getBrowserVersion();
         Configuration.browserSize = webConfig.getBrowserSize();
 
-        // Удалённый запуск с видео
-        String remoteUrl = System.getProperty("remoteBrowserUrl", webConfig.getRemoteUrl());
-        if (remoteUrl != null && !remoteUrl.isEmpty()) {
-            Configuration.remote = String.format("https://%s:%s@%s",
-                    System.getProperty("remoteBrowserUrlLogin", "user1"),
-                    System.getProperty("remoteBrowserUrlPassword", "1234"),
-                    remoteUrl);
+        // ✅ Видео и VNC — включены по умолчанию (Selenide сам обработает, где это возможно)
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("selenoid:options", Map.of(
+                "enableVNC", true,
+                "enableVideo", true,
+                "screenResolution", System.getProperty("browserResolution", "1920x1080")  // ✅ Убрали "x24"
+        ));
+        Configuration.browserCapabilities = capabilities;
 
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability("selenoid:options", Map.<String, Object>of(
-                    "enableVNC", true,
-                    "enableVideo", true,
-                    "screenResolution", System.getProperty("browserResolution", "1920x1080") + "x24"));
-            Configuration.browserCapabilities = capabilities;
+        // Удалённый запуск — только если явно передан URL
+        String remoteUrl = System.getProperty("remoteBrowserUrl");
+        if (remoteUrl != null && !remoteUrl.isEmpty()) {
+            String login = System.getProperty("remoteBrowserUrlLogin", "user1");
+            String password = System.getProperty("remoteBrowserUrlPassword", "1234");
+
+            // Нормализуем URL: убираем протокол, если есть
+            String host = remoteUrl.replaceAll("^https?://", "");
+            Configuration.remote = "https://" + login + ":" + password + "@" + host;
+
+            System.out.println("🌐 Remote: " + Configuration.remote);
         } else {
-            Configuration.remote = webConfig.getRemoteUrl();
+            // Локальный запуск — remote не устанавливаем
+            Configuration.remote = null;
+            System.out.println("🏠 Local browser");
         }
     }
 
@@ -63,28 +71,16 @@ public class TestBase {
     @AfterEach
     void tearDown() {
         if (WebDriverRunner.hasWebDriverStarted()) {
-            // Сохраняем sessionId, ПОКА драйвер жив
-            String sessionId = null;
-            try {
-                sessionId = ((RemoteWebDriver) WebDriverRunner.getWebDriver())
-                        .getSessionId().toString();
-            } catch (Exception ignored) {
-            }
+            // ✅ Видео ДО закрытия (sessionId ещё активен)
+            Attach.addVideo();
 
-            try {
-                Attach.screenshotAs("Last screenshot");
-                Attach.pageSource();
-                Attach.browserConsoleLogs();
-            } catch (Exception e) {
-                System.err.println("Не удалось сохранить вложения Allure: " + e.getMessage());
-            } finally {
-                Selenide.closeWebDriver();
-            }
+            // ✅ Остальные вложения
+            Attach.screenshotAs("Last screenshot");
+            Attach.pageSource();
+            Attach.browserConsoleLogs();
 
-            // Видео прикрепляем ПОСЛЕ закрытия, но с сохранённым sessionId
-            if (sessionId != null) {
-                Attach.addVideo(sessionId);
-            }
+            // ✅ Закрываем браузер
+            Selenide.closeWebDriver();
         }
     }
 }
