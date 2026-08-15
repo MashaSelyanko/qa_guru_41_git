@@ -44,7 +44,9 @@ public class Attach {
 
     @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
     public static String addVideo() {
-        String sessionId = Selenide.sessionId();
+        String sessionId = Selenide.sessionId() != null
+                ? Selenide.sessionId().toString()
+                : null;  // Преобразуем в String
 
         // Если без сессии (локальный запуск без Selenoid) — не добавляем битую ссылку
         if (sessionId == null) {
