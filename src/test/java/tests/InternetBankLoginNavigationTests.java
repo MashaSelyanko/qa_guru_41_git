@@ -4,13 +4,13 @@ import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import pages.TextBoxPage;
+import pages.PageObject;
 import static com.codeborne.selenide.Selenide.switchTo;
 import static io.qameta.allure.Allure.step;
 
 @Story("Internet Bank Login Navigation")
 public class InternetBankLoginNavigationTests extends TestBase {
-    TextBoxPage textBoxPage = new TextBoxPage();
+    PageObject pageObject = new PageObject();
 
     //переход на страницу входа в интернет-банк по кнопке "Войти"
     @Test
@@ -19,15 +19,15 @@ public class InternetBankLoginNavigationTests extends TestBase {
     void shouldOpenInternetBankLoginPage() {
 
         step("Open Web Main", () -> {
-            textBoxPage.openWebMain();
+            pageObject.openWebMain();
         });
 
         step("Click on 'Login' button in header", () -> {
-            textBoxPage.clickLoginButton();
+            pageObject.clickLoginButton();
         });
 
        step("Click on 'Интернет-банк ФЛ' button", () -> {
-            textBoxPage.clickInternetBankFl();
+            pageObject.clickInternetBankFl();
         });
 
         //переход на новую вкладку входа в интернет-банк
@@ -36,7 +36,7 @@ public class InternetBankLoginNavigationTests extends TestBase {
         });
 
         step("Verify that internet bank login page is successfully displayed", () -> {
-            textBoxPage.verifyInternetBankLoginPageIsOpened();
+            pageObject.verifyInternetBankLoginPageIsOpened();
         });
     }
 }

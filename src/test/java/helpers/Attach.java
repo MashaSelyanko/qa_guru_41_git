@@ -8,6 +8,7 @@ import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.SessionId;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -44,21 +45,43 @@ public class Attach {
 
     @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
     public static String addVideo() {
-        String sessionId = Selenide.sessionId() != null
-                ? Selenide.sessionId().toString()
-                : null;  // Преобразуем в String
+        SessionId sid = Selenide.sessionId();
+        String sessionId = (sid != null) ? sid.toString() : null;
 
-        // Если без сессии (локальный запуск без Selenoid) — не добавляем битую ссылку
         if (sessionId == null) {
-            return "<html><body><p>📹 Video not available (local run)</p></body></html>";
+            return "<html><body><p> Video not available</p></body></html>";
         }
 
-        // Фиксированный URL для Selenoid — не конфигурируется
-        String videoBaseUrl = "https://selenoid.autotests.cloud/video";
+        // ✅ Определяем URL в зависимости от окружения
+        String videoBaseUrl = System.getProperty("remote", "http://localhost:4444")
+                .contains("selenoid.autotests.cloud")
+                ? "https://selenoid.autotests.cloud/video"  // облако
+                : "http://localhost:4444/video";             // локально
 
         return "<html><body>" +
                 "<video width='100%' height='100%' controls autoplay>" +
                 "<source src='" + videoBaseUrl + "/" + sessionId + ".mp4' type='video/mp4'>" +
                 "</video></body></html>";
     }
-   }
+}
+
+//    @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
+//    public static String addVideo() {
+//        String sessionId = Selenide.sessionId() != null
+//                ? Selenide.sessionId().toString()
+//                : null;  // Преобразуем в String
+//
+//        // Если без сессии (локальный запуск без Selenoid) — не добавляем битую ссылку
+//        if (sessionId == null) {
+//            return "<html><body><p>📹 Video not available (local run)</p></body></html>";
+//        }
+//
+//        // Фиксированный URL для Selenoid — не конфигурируется
+//        String videoBaseUrl = "https://selenoid.autotests.cloud/video";
+//
+//        return "<html><body>" +
+//                "<video width='100%' height='100%' controls autoplay>" +
+//                "<source src='" + videoBaseUrl + "/" + sessionId + ".mp4' type='video/mp4'>" +
+//                "</video></body></html>";
+//    }
+//   }

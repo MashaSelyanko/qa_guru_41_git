@@ -3,13 +3,13 @@ package tests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import pages.TextBoxPage;
+import pages.PageObject;
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
 import static com.codeborne.selenide.Selenide.open;
 
 public class MainPageReturnTests extends TestBase {
 
-    TextBoxPage textBoxPage = new TextBoxPage();
+    PageObject pageObject = new PageObject();
 
     //проверка перехода на главную страницу по логотипу
     @Test
@@ -22,15 +22,15 @@ public class MainPageReturnTests extends TestBase {
         });
 
         step("Check submenu Buttons", () -> {
-            textBoxPage.clickHomeLogo();
+            pageObject.clickHomeLogo();
         });
 
         step("Check main Page", () -> {
-            textBoxPage.checkMainPageUrl();
+            pageObject.checkMainPageUrl();
         });
 
         step("Check promo banner", () -> {
-            textBoxPage.checkPromoBannerIsVisible();
+            pageObject.checkPromoBannerIsVisible();
         });
     }
 }

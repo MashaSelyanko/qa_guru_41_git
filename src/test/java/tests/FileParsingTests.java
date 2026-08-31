@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import pages.TextBoxPage;
+import pages.PageObject;
 import java.io.File;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class FileParsingTests extends TestBase {
 
-    TextBoxPage textBoxPage = new TextBoxPage();
+    PageObject pageObject = new PageObject();
 
     @Test
     @DisplayName("Verify interest rules PDF document content parsing")

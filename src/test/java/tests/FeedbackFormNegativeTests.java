@@ -6,13 +6,13 @@ import static io.qameta.allure.Allure.step;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import pages.TextBoxPage;
+import pages.PageObject;
 import testdata.TestData;
 
 @Story("FeedbackFormNegative")
 public class FeedbackFormNegativeTests extends TestBase {
 
-    TextBoxPage textBoxPage = new TextBoxPage();
+    PageObject pageObject = new PageObject();
     TestData testData = new TestData();
 
     //негативный тест - ввод на латинице ФИО в форме обратной связи
@@ -25,32 +25,32 @@ public class FeedbackFormNegativeTests extends TestBase {
         });
 
         step("Type full name: " + testData.fullName, () -> {
-            textBoxPage.typefullNameInputNegative(testData.fullNameNegative);
+            pageObject.typefullNameInputNegative(testData.fullNameNegative);
         });
 
         step("Type birth date: " + testData.dateBirthday, () -> {
-            textBoxPage.typeBirthInput(testData.dateBirthday);
+            pageObject.typeBirthInput(testData.dateBirthday);
         });
 
         step("Type phone number: " + testData.userNumber, () -> {
-            textBoxPage.setUserTelNumberInput(testData.userNumber);
+            pageObject.setUserTelNumberInput(testData.userNumber);
         });
 
         step("Type email: " + testData.userEmail, () -> {
-            textBoxPage.typeUserEmail(testData.userEmail);
+            pageObject.typeUserEmail(testData.userEmail);
         });
 
         step("Click the 'Continue' button", () -> {
-            textBoxPage.submitForm();
+            pageObject.submitForm();
         });
 
         step("Click the 'Continue' button", () -> {
-            textBoxPage.submitForm();
+            pageObject.submitForm();
         });
 
         // Проверка валидации поля ФИО
         step("Verify transition to Step 2", () -> {
-            textBoxPage.verifyRussianLettersErrorIsVisible();
+            pageObject.verifyRussianLettersErrorIsVisible();
         });
     }
 }

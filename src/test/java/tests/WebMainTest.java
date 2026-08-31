@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import pages.TextBoxPage;
+import pages.PageObject;
 import testdata.CustomerCategories;
 
 import java.util.stream.Stream;
@@ -14,7 +14,7 @@ import static com.codeborne.selenide.logevents.SelenideLogger.step;
 
 @Story("BankWebMain")
 public class WebMainTest extends TestBase {
-    TextBoxPage textBoxPage = new TextBoxPage();
+    PageObject pageObject = new PageObject();
 
    static Stream<Arguments> customerCategoryProvider() {
         return Stream.of(
@@ -32,15 +32,15 @@ public class WebMainTest extends TestBase {
     @Tag("Blocker")
     void selectAndValidateClientCategory(CustomerCategories category) {
         step("Open Web Main", () -> {
-            textBoxPage.openWebMain();
+            pageObject.openWebMain();
         });
 
         step("Select Category", () -> {
-            textBoxPage.selectCategory(category);
+            pageObject.selectCategory(category);
         });
 
         step("Validate buttons", () -> {
-            textBoxPage.checkSubmenuButtons();
+            pageObject.checkSubmenuButtons();
         });
     }
 }

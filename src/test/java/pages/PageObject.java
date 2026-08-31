@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverConditions.url;
 
-public class TextBoxPage {
+public class PageObject {
 
 
     private final ElementsCollection categoryLinks = $$("div.css-1ndprbh a.chakra-link");
