@@ -14,10 +14,10 @@ public class PageObject {
     private final ElementsCollection categoryLinks = $$("div.css-1ndprbh a.chakra-link");
     private final ElementsCollection submenuButtons = $$("#header-menu-submenu_height nav button");
 
-    private SelenideElement userfullNameInput = $("[name^='FIRSTNAME']");
-    private SelenideElement userBirthInput = $("[name^='COMMENT']");
-    private SelenideElement userNumberInput = $("[name^='PHONENUMBER']");
-    private SelenideElement userEmailInput = $("[name^='EMAIL']");
+    private SelenideElement userfullNameInput = $("[name^='FIRSTNAME-ФИО']");
+    private SelenideElement userBirthInput = $("[name^='COMMENT-Дата рождения']");
+    private SelenideElement userNumberInput = $("[name^='PHONENUMBER-Номер телефона']");
+    private SelenideElement userEmailInput = $("[name^='EMAIL-E-mail']");
 
     private SelenideElement submitButton = $(byText("Продолжить"));
     private SelenideElement HomeLogoButton = $(".chakra-link[href='/']");
